@@ -1,39 +1,36 @@
 import * as fs from "fs";
 
-import TableRow from "./modules/TableRow/TableRow";
-import { barrierSearch } from "./modules/funcs";
-import { _INPUT_FILE_NAME_, _PATH_TO_INPUT_FILE_, _KEY_FILE_NAME_ } from "./constants";
+import { generateArray, barrierSearch, getRandomNumber } from "./modules/funcs";
+import { _INPUT_FILE_NAME_, _PATH_TO_INPUT_FILE_ } from "./constants";
 
 
 // Подобие стандартного потока ввода
 const STDIN: string = fs.readFileSync(_PATH_TO_INPUT_FILE_ + _INPUT_FILE_NAME_, "utf-8");
-const KEY: string = fs.readFileSync(_PATH_TO_INPUT_FILE_ + _KEY_FILE_NAME_, "utf-8");
 
 
 /**
  * Основная функция
  */
 const main = async (): Promise<void> => {
-  // Создание таблицы, в которой будет происходить поиск
-  const table: Array<TableRow> = STDIN.split("\n\n").map((info: string) => {
-    const [carNumber, carBrand, ownerInfo] = info.split("\n");
-    return new TableRow(carNumber, carBrand, ownerInfo);
-  });
+  const arrayLength: number = +STDIN.split("\n")[0];
+  const [arrayMinValue, arrayMaxValue] = STDIN.split("\n")[1].split(" ").map((item: string) => +item);
+  
+  const randomTarget: number = getRandomNumber(arrayMinValue, arrayMaxValue);
 
-  const searchResult: TableRow | undefined = barrierSearch(table, KEY);
+  let array: Array<number> = generateArray(arrayLength, arrayMinValue, arrayMaxValue);
+
+  const searchResult: number | undefined = barrierSearch(array, randomTarget);
 
   if (searchResult === undefined) {
-    console.log("------------------------------");
-    console.log(`[RESULT]: Ключа ${KEY} в таблице не существует!`);
-    console.log("------------------------------");
+    console.log(`-------------------------------------`);
+    console.log(`[RESULT]: Ключа ${randomTarget} не существует в таблице!`);
+    console.log(`-------------------------------------`);
     return;
   }
 
-  console.log(`[RESULT]: Ключу ${KEY} соответсвует запись:`);
-
-  console.log("------------------------------");
-  console.log(searchResult.toString());
-  console.log("------------------------------");
+  console.log(`-------------------------------------`);
+  console.log(`[RESULT]: Ключу ${randomTarget} соответсвует индекс ${searchResult}`);
+  console.log(`-------------------------------------`);
 }
 
 
