@@ -1,5 +1,5 @@
 /* Название файла с входными данными */
-export const _INPUT_FILE_NAME_: string = "input.txt";
+export const _INPUT_FILE_NAME_: string = "input1.txt";
 
 /* Название файла, содержащего ключ */
 export const _KEY_FILE_NAME_: string = "key.txt";
