@@ -1,7 +1,7 @@
 import * as fs from "fs";
 
 import TableRow from "./modules/TableRow/TableRow";
-import { linearSearch } from "./modules/funcs";
+import { barrierSearch } from "./modules/funcs";
 import { _INPUT_FILE_NAME_, _PATH_TO_INPUT_FILE_, _KEY_FILE_NAME_ } from "./constants";
 
 
@@ -20,7 +20,7 @@ const main = async (): Promise<void> => {
     return new TableRow(carNumber, carBrand, ownerInfo);
   });
 
-  const searchResult: TableRow | undefined = linearSearch(table, KEY);
+  const searchResult: TableRow | undefined = barrierSearch(table, KEY);
 
   if (searchResult === undefined) {
     console.log("------------------------------");
