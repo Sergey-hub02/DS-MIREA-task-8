@@ -139,3 +139,51 @@ export const barrierSearch = (table: Array<number>, value: number): number | und
 
   return undefined;
 }
+
+
+/**
+ * Выполняет Фибоначчи поиск в заданном массиве array
+ * @param array         массив, в котором происходит поиск
+ * @param value         элемент, который нужно найти
+ */
+export const fibonacciSearch = (array: Array<number>, value: number): number | undefined => {
+  const length: number = array.length;
+
+  let fib1: number = 0;
+  let fib2: number = 1;
+  let fib: number = fib1 + fib2;
+
+  while (fib < length) {
+    fib2 = fib1;
+    fib1 = fib;
+    fib = fib1 + fib2;
+  }
+
+  let offset: number = -1;
+
+  while (fib > 1) {
+    let i: number = Math.min(offset + fib2, length - 1);
+
+    if (array[i] < value) {
+      fib = fib1;
+      fib1 = fib2;
+      fib2 = fib - fib1;
+
+      offset = i;
+    }
+    else if (array[i] > value) {
+      fib = fib2;
+      fib1 -= fib2;
+      fib2 = fib - fib1;
+    }
+    else {
+      return i;
+    }
+  }
+
+  if (fib1 === 1 && array[offset + 1] === value) {
+    return offset + 1;
+  }
+
+  return undefined;
+}
