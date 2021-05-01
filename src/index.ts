@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-import { generateArray, barrierSearch, getRandomNumber } from "./modules/funcs";
+import { generateArray, mergeSort } from "./modules/funcs";
 import { _INPUT_FILE_NAME_, _PATH_TO_INPUT_FILE_ } from "./constants";
 
 
@@ -15,22 +15,15 @@ const main = async (): Promise<void> => {
   const arrayLength: number = +STDIN.split("\n")[0];
   const [arrayMinValue, arrayMaxValue] = STDIN.split("\n")[1].split(" ").map((item: string) => +item);
   
-  const randomTarget: number = getRandomNumber(arrayMinValue, arrayMaxValue);
+  // const randomTarget: number = getRandomNumber(arrayMinValue, arrayMaxValue);
 
   let array: Array<number> = generateArray(arrayLength, arrayMinValue, arrayMaxValue);
 
-  const searchResult: number | undefined = barrierSearch(array, randomTarget);
+  console.log(array);
 
-  if (searchResult === undefined) {
-    console.log(`-------------------------------------`);
-    console.log(`[RESULT]: Ключа ${randomTarget} не существует в таблице!`);
-    console.log(`-------------------------------------`);
-    return;
-  }
+  mergeSort(array, 0, array.length - 1);
 
-  console.log(`-------------------------------------`);
-  console.log(`[RESULT]: Ключу ${randomTarget} соответсвует индекс ${searchResult}`);
-  console.log(`-------------------------------------`);
+  console.log(array);
 }
 
 

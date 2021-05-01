@@ -1,6 +1,50 @@
 import { cloneDeep } from "lodash";
 
 /**
+ * Выполняет операцию целочисленного деления value1 на value2
+ * @param value1        делимое
+ * @param value2        делитель
+ * @returns             целочисленное частное
+ */
+const div = (value1: number, value2: number): number => {
+  return (value1 - value1 % value2) / value2;
+}
+
+/**
+ * Выполняет слияние для подмассивов array[low...middle], array[middle+1...high]
+ * @param array         слияемые подмассивы
+ * @param low           левая граница слияния
+ * @param middle        средняя граница слияния
+ * @param high          правая граница слияния
+ */
+const merge = (array: Array<number>, low: number, middle: number, high: number): void => {
+  let i: number = low;
+  let j: number = middle + 1;
+
+  let extraArray: Array<number> = Array.from(array);
+
+  for (let k: number = low; k <= high; ++k) {
+    if (i > middle) {   // элементы из левой части закончились
+      array[k] = extraArray[j++];
+      continue;
+    }
+
+    if (j > high) {    // элементы из правой части закончились
+      array[k] = extraArray[i++];
+      continue;
+    }
+
+    if (extraArray[j] < extraArray[i]) {    // текущий ключ из правой половины меньше ключа из левой
+      array[k] = extraArray[j++];
+      continue;
+    }
+
+    // текущий ключ из левой половины меньше ключа из правой
+    array[k] = extraArray[i++];
+  }
+}
+
+/**
  * Возвращает случайное целое число в интервале [min, max)
  * @param min         минимальное возможное значение
  * @param max         максимальное возможное значение
@@ -26,6 +70,26 @@ export const generateArray = (length: number, min: number, max: number): Array<n
   }
 
   return array;
+}
+
+
+/**
+ * Выполняет сортировку слиянием для заданного массива array
+ * @param array         соритруемый массив
+ * @param low           левая граница сортировки
+ * @param high          правая граница сортировки
+ */
+export const mergeSort = (array: Array<number>, low: number, high: number): void => {
+  if (high <= low) {
+    return;
+  }
+
+  const middle: number = low + div(high - low, 2);
+
+  mergeSort(array, low, middle);
+  mergeSort(array, middle + 1, high);
+
+  merge(array, low, middle, high);
 }
 
 
