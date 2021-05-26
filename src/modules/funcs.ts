@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+// import { cloneDeep } from "lodash";
 
 /**
  * Выполняет операцию целочисленного деления value1 на value2
@@ -125,7 +125,8 @@ export const barrierSearch = (table: Array<number>, value: number): number | und
     return undefined;
   }
 
-  let last: number = cloneDeep(table[length - 1]);   // запоминаем последний элемент
+  // let last: number = cloneDeep(table[length - 1]);   // запоминаем последний элемент
+  let last: number = table[length - 1];
   let index: number = 0;
 
   table[length - 1] = value;    // гарантирует, что ключ найдётся
@@ -163,6 +164,7 @@ export const fibonacciSearch = (array: Array<number>, value: number): number | u
 
   while (fib > 1) {
     let i: number = Math.min(offset + fib2, length - 1);
+    array[i] = value;
 
     if (array[i] < value) {
       fib = fib1;

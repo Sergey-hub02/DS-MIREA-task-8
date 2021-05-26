@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-import { generateArray, mergeSort, fibonacciSearch, getRandomNumber } from "./modules/funcs";
+import { generateArray, fibonacciSearch, getRandomNumber } from "./modules/funcs";
 import { _INPUT_FILE_NAME_, _PATH_TO_INPUT_FILE_ } from "./constants";
 
 
@@ -18,10 +18,13 @@ const main = async (): Promise<void> => {
   const randomTarget: number = getRandomNumber(arrayMinValue, arrayMaxValue);
 
   let array: Array<number> = generateArray(arrayLength, arrayMinValue, arrayMaxValue);
+  array.sort();
 
-  mergeSort(array, 0, array.length - 1);
+  console.time("search");
 
   const searchResult: number | undefined = fibonacciSearch(array, randomTarget);
+
+  console.timeEnd("search");
 
   console.log("------------------------------")
 
